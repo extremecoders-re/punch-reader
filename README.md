@@ -4,4 +4,4 @@ This is a small web application designed to read punched card images generated b
 
 The images must have an exact size of 588 x 264 or else this tool won't work. For an example try clicking on one of the sample images provided.
 
-View the live demo at https://github.com/extremecoders-re/punch-reader
+View the live demo at https://extremecoders-re.github.io/punch-reader/
