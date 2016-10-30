@@ -5,6 +5,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        .panel-heading a:after {
+            font-family: 'Glyphicons Halflings';
+            content: "\e260";
+            float: right;
+            color: white;
+        }
+        
+        .panel-heading a.collapsed:after {
+            content: "\e259";
+        }
+    </style>
 </head>
 
 <body>
@@ -28,12 +41,12 @@
                     <option value="card-custom">Custom</option>        
                 </select>
             </div>
-            
+
             <div class="form-group">
                 <label for="punch-color">Custom punch color (eg 0 for black, 255 for white): </label>
                 <input class="form-control" type="number" min="0" max="255" value="20" id="punch-color" onchange="handlePunchColor()" disabled/>
             </div>
-            
+
             <a name="thumb-blocks"></a>
             <div class="form-group">
                 <label>Or select from an example image below: </label>
@@ -68,19 +81,33 @@
         </form>
 
         <div class="panel panel-primary">
-            <div class="panel-heading">Original Image</div>
-            <div class="panel-body"><img id="org_image" src="" class="img-responsive"></img>
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#panel1">Original Image</a>
+                </h4>
+            </div>
+            <div id="panel1" class="collapse">
+                <div class="panel-body"><img id="org_image" src="" class="img-responsive"></img>
+                </div>
             </div>
         </div>
 
         <div class="panel panel-primary">
-            <div class="panel-heading">Punch Positions</div>
-            <div class="panel-body"><img id="punch_image" src="" class="img-responsive"></img>
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#panel2">Punch Positions</a>
+                </h4>
+            </div>
+            <div id="panel2" class="collapse">
+                <div class="panel-body"><img id="punch_image" src="" class="img-responsive"></img>
+                </div>
             </div>
         </div>
 
         <div class="panel panel-primary">
-            <div class="panel-heading">Encoded Message</div>
+            <div class="panel-heading">
+                <h4 class="panel-title">Encoded Message</h4>
+            </div>
             <div class="panel-body">
                 <div id="result"></div>
             </div>
