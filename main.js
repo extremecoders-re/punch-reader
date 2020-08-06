@@ -232,54 +232,56 @@ function processImage(imdata) {
 
     var img = new Image();
     img.src = imdata;
-    var im_width = img.width;
-    var im_height = img.height;
-
-    if (im_width != 588 || im_height != 264) {
-        $("#error-modal").modal('show');
-        return;
-    }
-
-    canvas.width = im_width;
-    canvas.height = im_height;
-    ctx.drawImage(img, 0, 0);
-
-    var imgData = ctx.getImageData(0, 0, im_width, im_height);
-    imgData = posterizeImage(imgData);
-    //ctx.putImageData(imgData, 0, 0);
-
-    var step_x = 7,
-        step_y = 20;
-    var start_x = 14,
-        start_y = 20;
-
-    // 84 columns of 7 pixels each, 
-    var data = []
-    for (var col = 0; col < 80; col++) {
-        var x = start_x + (col * step_x) + 3;
-
-        for (var row = 0; row < 12; row++) {
-            var y = start_y + (row * step_y) + 5;
-            var px = imgData.data[(y * im_width * 4) + (x * 4)];
-
-            if (px == 0) {
-                data.push(1);
-                ctx.beginPath();
-                ctx.arc(x, y, 2, 0, 2 * Math.PI);
-                ctx.fillStyle = "red";
-                ctx.fill();
-            }
-            else {
-                data.push(0);
+    img.onload = function(){
+        var im_width = img.width;
+        var im_height = img.height;
+    
+        if (im_width != 588 || im_height != 264) {
+            $("#error-modal").modal('show');
+            return;
+        }
+    
+        canvas.width = im_width;
+        canvas.height = im_height;
+        ctx.drawImage(img, 0, 0);
+    
+        var imgData = ctx.getImageData(0, 0, im_width, im_height);
+        imgData = posterizeImage(imgData);
+        //ctx.putImageData(imgData, 0, 0);
+    
+        var step_x = 7,
+            step_y = 20;
+        var start_x = 14,
+            start_y = 20;
+    
+        // 84 columns of 7 pixels each, 
+        var data = []
+        for (var col = 0; col < 80; col++) {
+            var x = start_x + (col * step_x) + 3;
+    
+            for (var row = 0; row < 12; row++) {
+                var y = start_y + (row * step_y) + 5;
+                var px = imgData.data[(y * im_width * 4) + (x * 4)];
+    
+                if (px == 0) {
+                    data.push(1);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 2, 0, 2 * Math.PI);
+                    ctx.fillStyle = "red";
+                    ctx.fill();
+                }
+                else {
+                    data.push(0);
+                }
             }
         }
+        punch_image.src = canvas.toDataURL();
+        var msg = "";
+        for (var idx = 0; idx < data.length; idx += 12)
+            msg += getCharacter(data.slice(idx, idx + 12));
+    
+        document.getElementById("result").innerText = htmlEncode(msg);
     }
-    punch_image.src = canvas.toDataURL();
-    var msg = "";
-    for (var idx = 0; idx < data.length; idx += 12)
-        msg += getCharacter(data.slice(idx, idx + 12));
-
-    document.getElementById("result").innerText = htmlEncode(msg);
 }
 
 function handleFileSelect(evt) {
